@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  db:
+    container_name: 'database-sistem'
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+    ports:
+      - "5438:5432"
+    volumes:
+      - my_volume:/path/in/container
+  pgadmin:
+    container_name: 'pgadmin'
+    image: 'dpage/pgadmin4:6'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DB_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DB_PASS}
+      PGADMIN_DEFAULT_LISTEN_PORT: 5050  # Set the listen port for pgAdmin
+    networks:
+      - my_network
+    ports:
+      - "5050:5050"
+volumes:
+  my_volume:
+networks:
+  my_network:
